@@ -27,99 +27,81 @@ A Multifunction Web/Api Stresser/Spoofer
 {YELLOW}[1]{WHITE} API Stresser\t\t\t{YELLOW}[2]{WHITE} Check API Response
 {YELLOW}[3]{WHITE} DNS Lookup\t\t\t\t{YELLOW}[4]{WHITE} IP Stresser
 {YELLOW}[5]{WHITE} Portscanner\t\t\t{YELLOW}[6]{WHITE} Connection Spoofer
-{YELLOW}[00]{WHITE} Exit\t\t\t\t{YELLOW}[99]{WHITE} Tool Info
+{YELLOW}[exit]{WHITE} Exit\t\t\t\t{YELLOW}[99]{WHITE} Tool Info
 """
 
-# logo = Center.XYCenter(logo)
 logo =  Center.XCenter(logo)
 logo = Center.YCenter(logo)
 
+def clear():
+  if os.name == "nt":
+    os.system("cls")
+  else:
+    os.system("clear")
 
-file = open(f"src\\fromthedev.txt","w")
-file.write("Hello! This tool is coded with love by infamous koala, here are the links:\nGithub: https://github.com/infamouskoala\nYoutube: https://youtube.com/infamouskoala\nThank you so much for using my tool.")
-file.close()
-
-os.system("cls || clear")
-os.system("title KoalaNet")
+clear()
 print(logo, end="\n")
 option = int(input("enter choice: "))
 
-def clear():
-    os.system("cls || clear")
 
 def a():
     print(f"{YELLOW}RELAUNCH THE CLIENT TO CLOSE THE PROCESS{WHITE}")
 
 # main
 while True:
+  match option:
+    case 1:
+        a()
+        url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
+        apiflood(url)
 
-  if option == 1:
-      a()
-      url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
-      apiflood(url)
+    case 2:
+        a()
+        url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
+        checkapi(url)
 
-  elif option == 2:
-      a()
-      url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
-      checkapi(url)
+    case 3:
+        a()
+        url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
+        dns(url)
 
-  elif option == 3:
-      a()
-      url = input(f"{YELLOW}[URL]{WHITE} enter url: ")
-      dns(url)
+    case 4:
+        a()
+        ip = str(input(f"{YELLOW}[IP]{WHITE} enter ip: "))
+        port = int(input(f"{YELLOW}[INT: PORT]{WHITE} port: "))
+        sleep = float(input(f"{YELLOW}[FLOAT: SLEEP]{WHITE} sleep: "))
+        conflood(ip, port, sleep)
 
-  elif option == 4:
-      a()
-      ip = str(input(f"{YELLOW}[IP]{WHITE} enter ip: "))
-      port = int(input(f"{YELLOW}[INT: PORT]{WHITE} port: "))
-      sleep = float(input(f"{YELLOW}[FLOAT: SLEEP]{WHITE} sleep: "))
-      conflood(ip, port, sleep)
+    case 5:
+        a()
+        ip = input(f"{YELLOW}[IP]{WHITE} IP: ")
+        s = int(input(f"{YELLOW}[START]{WHITE} STARTPORT: "))
+        e = int(input(f"{YELLOW}[END]{WHITE} ENDPORT: "))
+        while True:
+            nd = input(f"{YELLOW}[PORTSCAN: HOME]{WHITE} requests: 'r' or socket: 's': ")
+            help = nd.lower()
+            if help == "r":
+                open_ports = reqscan(ip, s, e)
+                print(f"{PURPLE}[+]{WHITE} Open ports:", open_ports)
+            elif help == "s":
+                open_ports = sockscan(ip, s, e)
+                print(f"{PURPLE}[+]{WHITE} Open ports:", open_ports)
+            else:
+                print(f"{RED}[ERROR]{WHITE} Invalid choice '{nd}', its either 'r' or 's'.")
 
-  elif option == 5:
-      a()
-      ip = input(f"{YELLOW}[IP]{WHITE} IP: ")
-      s = int(input(f"{YELLOW}[START]{WHITE} STARTPORT: "))
-      e = int(input(f"{YELLOW}[END]{WHITE} ENDPORT: "))
-      while True:
-          nd = input(f"{YELLOW}[PORTSCAN: HOME]{WHITE} requests: 'r' or socket: 's': ")
-          help = nd.lower()
-          if help == "r":
-              open_ports = reqscan(ip, s, e)
-              print(f"{PURPLE}[+]{WHITE} Open ports:", open_ports)
-          elif help == "s":
-              open_ports = sockscan(ip, s, e)
-              print(f"{PURPLE}[+]{WHITE} Open ports:", open_ports)
-          else:
-              print(f"{RED}[ERROR]{WHITE} Invalid choice '{nd}', its either 'r' or 's'.")
+    case 6:
+        a()
+        ip = input(f"{YELLOW}[HOST]{WHITE} Host IP: ")
+        port = int(input(f"{YELLOW}[ACCESS]{WHITE} Access Port: "))
+        print(f"{RED}[HIJACK]{WHITE} Connecting to host...")
+        spoof(ip, port)
 
-  elif option == 6:
-      a()
-      ip = input(f"{YELLOW}[HOST]{WHITE} Host IP: ")
-      port = int(input(f"{YELLOW}[ACCESS]{WHITE} Access Port: "))
-      print(f"{RED}[HIJACK]{WHITE} Connecting to host...")
-      spoof(ip, port)
+    case exit:
+        clear()
+        os.system("title Exitting...")
+        print(f"press any key to exit")
+        input()
+        exit(0)
 
-  elif option == 99:
-      print(f"""Hello this is Koala, Thank you so much for using my tool. Here are the tool links: 
-Github: https://github.com/infamouskoala/koalanet
-YouTube: https://youtube.com/infamouskoala 
-""")
-      x = input(f"{GREEN}[LINK]{WHITE} Github/YouTube: ")
-      imlonely = x.lower()
-      if imlonely == "github":
-          webbrowser.open_new_tab("https://github.com/infamouskoala/koalanet")
-          print(f"Opened github link in your browser :)")
-          input()
-      elif imlonely == "youtube":
-          webbrowser.open_new_tab("https://youtube.com/infamouskoala")
-          print(f"Opened youtube link in your browser :)")
-          input()
-      else:
-          print(f"{RED}[!]{WHITE} Invalid link '{x}', try 'github' or 'youtube'")
-          input()
-  elif option == 00:
-      clear()
-      os.system("title Exitting...")
-      print(f"press any key to exit")
-      input()
-      sys.exit()
+    case _:
+      print(f"{RED}[!]{WHITE} Invalid option {option}")
